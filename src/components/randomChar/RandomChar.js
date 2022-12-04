@@ -16,6 +16,8 @@ class RandomChar extends Component {
 
     marvelService = new MarvelService()
 
+    // "http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available.jpg"
+
     componentDidMount() {
         this.updateChar()
         // this.timerId = setInterval(this.updateChar, 3000)
@@ -72,7 +74,7 @@ class RandomChar extends Component {
                         Or choose another one
                     </p>
                     <button className="button button__main">
-                        <div className="inner">try it</div>
+                        <div onClick={this.updateChar} className="inner">try it</div>
                     </button>
                     <img src={mjolnir} alt="mjolnir" className="randomchar__decoration" />
                 </div>
@@ -83,10 +85,11 @@ class RandomChar extends Component {
 
 const View = ({ char }) => {
     const { name, description, thumbnail, homepage, wiki } = char
+    const thumbnailFix = thumbnail.includes('image_not_available.jpg') ? { objectFit: 'contain' } : null
 
     return (
         <div className="randomchar__block">
-            <img src={thumbnail} alt="Random character" className="randomchar__img" />
+            <img src={thumbnail} alt="Random character" className="randomchar__img" style={thumbnailFix} />
             <div className="randomchar__info">
                 <p className="randomchar__name">{name}</p>
                 <p className="randomchar__descr">
