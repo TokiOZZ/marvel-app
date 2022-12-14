@@ -5,7 +5,7 @@ const CharInfo = () => {
     return (
         <div className="char__info">
             <div className="char__basics">
-                <img src={thor} alt="abyss"/>
+                <img src={thor} alt="abyss" />
                 <div>
                     <div className="char__info-name">thor</div>
                     <div className="char__btns">
