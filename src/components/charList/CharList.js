@@ -6,22 +6,22 @@ import './charList.scss';
 
 class CharList extends Component {
     state = {
-        charsList: [],
+        charList: [],
         loading: false,
         error: true,
     }
 
     marvelService = new MarvelService()
 
-    onCharLoaded = (charsList) => {
+    onCharLoaded = (charList) => {
         this.setState({
-            charsList,
+            charList,
             loading: false
         })
 
     }
 
-    onError = (charsList) => {
+    onError = (charList) => {
         this.setState({
             error: true,
             loading: false
@@ -29,7 +29,7 @@ class CharList extends Component {
 
     }
 
-    updateCharsList = () => {
+    updatecharList = () => {
         this.setState({
             error: false,
             loading: true
@@ -41,15 +41,41 @@ class CharList extends Component {
     }
 
     componentDidMount() {
-        this.updateCharsList()
+        this.updatecharList()
+    }
+
+    renderItems(arr) {
+        const items = arr.map((item) => {
+            let imgStyle = { 'objectFit': 'cover' };
+            if (item.thumbnail === 'http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available.jpg') {
+                imgStyle = { 'objectFit': 'unset' };
+            }
+
+            return (
+                <li
+                    className="char__item"
+                    key={item.id}
+                    onClick={() => this.props.onCharSelected(item.id)}>
+                    <img src={item.thumbnail} alt={item.name} style={imgStyle} />
+                    <div className="char__name">{item.name}</div>
+                </li>
+            )
+        });
+        // А эта конструкция вынесена для центровки спиннера/ошибки
+        return (
+            <ul className="char__grid">
+                {items}
+            </ul>
+        )
     }
 
     render() {
 
-        const { charsList, loading, error } = this.state
+        const { charList, loading, error } = this.state
+        const items = this.renderItems(charList);
         const errorMessage = error ? <ErrorMessage /> : null
         const spinner = loading ? <Spinner /> : null
-        const content = !(loading || error) ? <View charsList={charsList} /> : null
+        const content = !(loading || error) ? items : null
 
         return (
             <div className="char__list">
@@ -67,24 +93,24 @@ class CharList extends Component {
 
 }
 
-const View = ({ charsList }) => {
+// const View = ({ charList }) => {
 
-    const charItem = charsList.map(char => {
-        const { name, thumbnail } = char
-        const thumbnailFix = thumbnail.includes('image_not_available.jpg') ? { objectFit: 'contain' } : null
-        return (
-            <li className="char__item">
-                <img src={thumbnail} alt={name} style={thumbnailFix} />
-                <div className="char__name">{name}</div>
-            </li>
-        )
-    })
+//     const charItem = charList.map(char => {
+//         const { name, thumbnail } = char
+//         const thumbnailFix = thumbnail.includes('image_not_available.jpg') ? { objectFit: 'contain' } : null
+//         return (
+//             <li className="char__item">
+//                 <img src={thumbnail} alt={name} style={thumbnailFix} />
+//                 <div className="char__name">{name}</div>
+//             </li>
+//         )
+//     })
 
-    return (
-        <ul className="char__grid">
-            {charItem}
-        </ul>
-    )
-}
+//     return (
+//         <ul className="char__grid">
+//             {charItem}
+//         </ul>
+//     )
+// }
 
 export default CharList;
