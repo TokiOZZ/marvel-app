@@ -61,7 +61,7 @@ class CharList extends Component {
                 </li>
             )
         });
-        // А эта конструкция вынесена для центровки спиннера/ошибки
+
         return (
             <ul className="char__grid">
                 {items}
@@ -93,24 +93,5 @@ class CharList extends Component {
 
 }
 
-// const View = ({ charList }) => {
-
-//     const charItem = charList.map(char => {
-//         const { name, thumbnail } = char
-//         const thumbnailFix = thumbnail.includes('image_not_available.jpg') ? { objectFit: 'contain' } : null
-//         return (
-//             <li className="char__item">
-//                 <img src={thumbnail} alt={name} style={thumbnailFix} />
-//                 <div className="char__name">{name}</div>
-//             </li>
-//         )
-//     })
-
-//     return (
-//         <ul className="char__grid">
-//             {charItem}
-//         </ul>
-//     )
-// }
 
 export default CharList;
